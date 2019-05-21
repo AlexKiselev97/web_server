@@ -82,18 +82,16 @@ void Session::handle_read(const boost::system::error_code& error, size_t bytes_t
                 fileToSend.assign((istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
                 fileToSend = "HTTP/1.0 200 OKr\r\n\r\n" + fileToSend;
                 boost::asio::write(socket_, boost::asio::buffer(fileToSend.data(), fileToSend.size()));
-                cout << "delete session\n";
-                delete this;
             }
             else
             {
                 cout << "cant open file\nsend 404\n";
                 char error404[] = "HTTP/1.0 404 NOT FOUND\r\n";
                 boost::asio::write(socket_, boost::asio::buffer(error404, 25));
-                cout << "delete session\n";
-                delete this;
             }
         }
+	cout << "delete session\n";
+	delete this;
     }
 }
 }
